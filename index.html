@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pathfinder — Expedition Search Studio</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="rail">
+        <header class="brand">
+          <p class="kicker">Search studio</p>
+          <h1>Pathfinder</h1>
+          <p class="lede">
+            Pathfinding on a real heightmap. Slope is cost. Algorithms that ignore elevation take the dumb line;
+            Dijkstra and A* take the ridge.
+          </p>
+        </header>
+
+        <section>
+          <h2>Algorithm</h2>
+          <label class="field">
+            <span>Primary</span>
+            <select id="algo">
+              <option value="bfs">BFS — fewest steps</option>
+              <option value="dfs">DFS — stack walk</option>
+              <option value="dijkstra">Dijkstra — cheapest climb</option>
+              <option value="astar" selected>A* — informed cheapest</option>
+              <option value="greedy">Greedy best-first</option>
+              <option value="bibfs">Bidirectional BFS</option>
+            </select>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="race" />
+            Race a second algorithm (stats only)
+          </label>
+          <label class="field">
+            <span>Challenger</span>
+            <select id="algo-b" disabled>
+              <option value="bfs">BFS</option>
+              <option value="dijkstra" selected>Dijkstra</option>
+              <option value="astar">A*</option>
+              <option value="greedy">Greedy</option>
+            </select>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="eight" checked />
+            8-direction movement
+          </label>
+          <label class="field">
+            <span>Playback</span>
+            <input type="range" id="speed" min="0.2" max="3" step="0.1" value="1" />
+          </label>
+          <div class="row">
+            <button class="primary" id="run" type="button">Run expedition</button>
+            <button id="reset" type="button">Clear search</button>
+          </div>
+        </section>
+
+        <section>
+          <h2>Terrain</h2>
+          <label class="field">
+            <span>Map seed</span>
+            <input id="seed" type="text" inputmode="numeric" />
+          </label>
+          <div class="row">
+            <button id="new-map" type="button">New ridgeline</button>
+          </div>
+          <div class="tools">
+            <button data-tool="start" type="button">Basecamp</button>
+            <button data-tool="goal" type="button">Summit</button>
+            <button data-tool="wall" class="is-on" type="button">Crevasse</button>
+            <button data-tool="road" type="button">Road</button>
+            <button data-tool="ridge" type="button">Raise</button>
+            <button data-tool="erase" type="button">Restore</button>
+          </div>
+          <div class="tools">
+            <button data-gen="noise" type="button">Elevation</button>
+            <button data-gen="backtracker" type="button">Backtracker maze</button>
+            <button data-gen="prim" type="button">Prim maze</button>
+            <button data-gen="division" type="button">Division</button>
+            <button data-gen="scatter" type="button">Scatter walls</button>
+          </div>
+        </section>
+
+        <section class="stats">
+          <h2>Expedition log</h2>
+          <dl>
+            <div><dt>Expanded</dt><dd id="stat-expanded">—</dd></div>
+            <div><dt>Path cells</dt><dd id="stat-length">—</dd></div>
+            <div><dt>Path cost</dt><dd id="stat-cost">—</dd></div>
+            <div><dt>Compute</dt><dd id="stat-ms">—</dd></div>
+          </dl>
+          <p id="race-note" class="note"></p>
+        </section>
+
+        <p class="hint">Space run · R reset · N new map · 1–6 algorithms · D 4/8-dir</p>
+      </aside>
+
+      <main class="stage">
+        <div class="stage-frame">
+          <canvas id="map"></canvas>
+        </div>
+        <p id="status" class="status"></p>
+      </main>
+    </div>
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>
